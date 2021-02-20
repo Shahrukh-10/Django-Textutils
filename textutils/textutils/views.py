@@ -27,7 +27,7 @@ def analyze(request):
             'analyzedtext':analyzed,
             'purpose':'Remove Punctuation'
         }
-        return render(request,'analyze.html',context)
+        djtext=analyzed
 
     
     if (fullcaps == 'on'):
@@ -38,20 +38,20 @@ def analyze(request):
             'analyzedtext':analyzed,
             'purpose':'Change to upper case'
         }
-        return render(request, 'analyze.html',context)
+        analyzed = djtext
 
 
 
     if(newlineremover == "on"):
         analyzed = ''
         for char in djtext:
-            if char != '\n':
+            if char != '\n' and char!='\r':
                 analyzed = analyzed + char
         context = { 
             'analyzedtext':analyzed,
             'purpose':'Removed new line'
         }
-        return render(request, 'analyze.html',context)
+        analyzed = djtext
     
 
     if (extraspaceremover=='on'):
@@ -63,7 +63,7 @@ def analyze(request):
             'analyzedtext':analyzed,
             'purpose':' Extra Space Remover'
         }
-        return render(request, 'analyze.html',context)
+        analyzed = djtext
 
     if(charcount == 'on'):
         count=0
@@ -74,16 +74,8 @@ def analyze(request):
             'analyzedtext':count,
             'purpose':' Extra Space Remover'
         }
-        return render(request, 'analyze.html',context)
+    return render(request, 'analyze.html',context)
 
-
-    else:
-        analyzed = djtext
-        context = { 
-            'analyzedtext':analyzed,
-            'purpose':'No Action'
-        }
-        return render(request, 'analyze.html',context)
 
 
 # def removepunc(request):
